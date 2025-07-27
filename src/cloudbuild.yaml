@@ -1,0 +1,18 @@
+steps:
+  - name: 'node:18'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        npm install
+        npm run build
+
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        gsutil -m rsync -r build gs://my-react-appv1
+
+options:
+  logging: CLOUD_LOGGING_ONLY
